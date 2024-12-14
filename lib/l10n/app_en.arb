@@ -1,0 +1,10 @@
+{
+  "create_account": "Create Account",
+  "already_have_an_account": "Already have an account?",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "confirm_password": "Confirm Password",
+  "new_in_the_app": "New in the app?",
+  "default_error": "Something went wrong. Please try again."
+}
