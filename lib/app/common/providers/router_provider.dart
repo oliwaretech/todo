@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/app/features/auth/presentation/screens/login_screen.dart';
 import 'package:todo/app/features/auth/presentation/screens/register_screen.dart';
-import 'package:todo/app/features/presentation/screens/home_screen.dart';
+import 'package:todo/app/features/home/presentation/screens/home_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootKey');

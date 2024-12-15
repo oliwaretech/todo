@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:todo/app/common/extensions/build_context_extensions.dart';
 import 'package:todo/app/common/providers/secure_storage_provider.dart';
 import 'package:todo/app/features/auth/presentation/screens/login_screen.dart';
-import 'package:todo/app/features/presentation/providers/home_providers.dart';
-import 'package:todo/app/features/presentation/widgets/toggle_button_widget.dart';
+import 'package:todo/app/features/home/presentation/providers/home_providers.dart';
+import 'package:todo/app/features/home/presentation/widgets/toggle_button_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

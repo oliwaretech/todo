@@ -6,8 +6,8 @@ import 'package:todo/app/common/providers/router_provider.dart';
 import 'package:todo/app/common/providers/secure_storage_provider.dart';
 import 'package:todo/app/core/themes/app_theme.dart';
 import 'package:todo/app/features/auth/presentation/screens/login_screen.dart';
-import 'package:todo/app/features/presentation/screens/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo/app/features/home/presentation/screens/home_screen.dart';
 
 class App extends ConsumerStatefulWidget {
   const App({super.key});
