@@ -6,5 +6,6 @@
   "password": "Password",
   "confirm_password": "Confirm Password",
   "new_in_the_app": "New in the app?",
-  "default_error": "Something went wrong. Please try again."
+  "default_error": "Something went wrong. Please try again.",
+  "name": "Name"
 }

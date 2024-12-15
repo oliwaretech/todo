@@ -16,4 +16,14 @@ class AuthProvider {
     final repository = ref.read(authRepositoryProvider);
     await repository.signIn(email: email, password: password);
   }
+
+  Future<void> register(String email, String password) async {
+    final repository = ref.read(authRepositoryProvider);
+    await repository.register(email: email, password: password);
+  }
+
+  Future<void> registerUser(String name, String email, String password) async {
+    final repository = ref.read(authRepositoryProvider);
+    await repository.registerUser(name: name, email: email, password: password);
+  }
 }

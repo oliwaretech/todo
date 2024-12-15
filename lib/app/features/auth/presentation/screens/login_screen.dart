@@ -8,7 +8,6 @@ import 'package:todo/app/common/helpers/constans.dart';
 import 'package:todo/app/common/helpers/input_validators.dart';
 import 'package:todo/app/common/helpers/notifications/app_notifications.dart';
 import 'package:todo/app/common/providers/connectivity_provider.dart';
-import 'package:todo/app/common/providers/secure_storage_provider.dart';
 import 'package:todo/app/core/themes/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/app/features/auth/presentation/screens/register_screen.dart';
@@ -42,7 +41,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 20),
-              const Icon(Icons.login, size: 100, color: AppColors.primary),
+              const Icon(Icons.login_rounded, size: 100, color: AppColors.primary),
               const SizedBox(height: 40),
               TextFormField(
                 controller: emailController,
