@@ -124,7 +124,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   value: 'option3',
                   child: InkWell(
                     onTap: () {
-                      Navigator.pop(context);
                       ref.read(secureStorageProvider.notifier).deleteToken();
                       context.goNamed(LoginScreen.name);
                     },
