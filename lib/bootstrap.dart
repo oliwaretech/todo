@@ -15,6 +15,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
 
-  await Hive.openBox('myBox');
+  await Hive.openBox<Task>('tasks');
   runApp(ProviderScope(child: await builder()));
 }

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/app/common/providers/router_provider.dart';
 import 'package:todo/app/common/providers/secure_storage_provider.dart';
+import 'package:todo/app/common/providers/theme_provider.dart';
 import 'package:todo/app/core/themes/app_theme.dart';
 import 'package:todo/app/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,6 +39,7 @@ class _AppState extends ConsumerState<App> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = ref.watch(themeNotifierProvider);
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -61,6 +63,8 @@ class _AppState extends ConsumerState<App> {
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
       theme: appLightTheme,
+      darkTheme: appDarkTheme,
+      themeMode: themeMode,
       builder: (context, child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(

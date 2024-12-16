@@ -12,6 +12,7 @@ import 'package:todo/app/core/themes/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/app/features/auth/presentation/screens/register_screen.dart';
 import 'package:todo/app/features/auth/providers/auth_provider.dart';
+import 'package:todo/app/features/home/presentation/screens/home_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -73,7 +74,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 validator: InputValidators.notEmpty,
                 obscureText: obscurePassword,
               ),
-              const SizedBox(height: 16),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -130,6 +130,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         emailController.text,
         passwordController.text,
       );
+      context.goNamed(HomeScreen.name);
     } catch (e) {
       String message = mounted ? AppLocalizations.of(context)!.default_error : defaultErrorText;
       if (e is Exception) {

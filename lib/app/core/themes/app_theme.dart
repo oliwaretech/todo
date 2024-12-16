@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo/app/core/themes/app_colors.dart';
@@ -98,12 +99,6 @@ final ThemeData appLightTheme = ThemeData(
       color: AppColors.primaryText,
     ),
   ),
-  bottomAppBarTheme: const BottomAppBarTheme(
-    color: AppColors.navbarBackground,
-    elevation: 0,
-    height: 70,
-    shape: CircularNotchedRectangle(),
-  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       overlayColor: WidgetStateProperty.resolveWith(
@@ -121,36 +116,11 @@ final ThemeData appLightTheme = ThemeData(
       padding: WidgetStateProperty.all(const EdgeInsets.all(0)),
       minimumSize: WidgetStateProperty.all(const Size.fromHeight(50)),
       iconSize: WidgetStateProperty.all(36),
+      iconColor: WidgetStateProperty.all(AppColors.darkBackground),
       textStyle: WidgetStateProperty.all(
         mainFont(
           fontSize: 16,
           fontWeight: FontWeight.w700,
-        ),
-      ),
-    ),
-  ),
-  outlinedButtonTheme: OutlinedButtonThemeData(
-    style: ButtonStyle(
-      backgroundColor: WidgetStateProperty.all(Colors.transparent),
-      foregroundColor: WidgetStateProperty.all(AppColors.primary),
-      textStyle: WidgetStateProperty.all(
-        mainFont(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      ),
-      padding: WidgetStateProperty.all(
-        const EdgeInsets.all(0),
-      ),
-      minimumSize: WidgetStateProperty.all(const Size.fromHeight(50)),
-      iconSize: WidgetStateProperty.all(36),
-      side: WidgetStateProperty.all(
-        const BorderSide(
-          color: AppColors.primary,
-          width: 2,
         ),
       ),
     ),
@@ -172,40 +142,6 @@ final ThemeData appLightTheme = ThemeData(
         return AppColors.primaryBackground;
       }
     }),
-  ),
-  radioTheme: RadioThemeData(
-    fillColor: WidgetStateProperty.resolveWith((states) {
-      if (states.contains(WidgetState.disabled)) {
-        return AppColors.neutral200;
-      } else if (states.contains(WidgetState.selected)) {
-        return AppColors.primary;
-      } else {
-        return AppColors.primary;
-      }
-    }),
-    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-    visualDensity: VisualDensity.compact,
-  ),
-  chipTheme: ChipThemeData(
-    backgroundColor: AppColors.secondary100,
-    disabledColor: AppColors.neutral50,
-    selectedColor: AppColors.secondary,
-    secondarySelectedColor: AppColors.secondary,
-    labelStyle: TextStyle(
-      fontFamily: mainFont().fontFamily,
-      fontSize: 14,
-      fontWeight: FontWeight.w700,
-      color: AppColors.secondary,
-    ),
-    showCheckmark: false,
-    elevation: 0,
-    padding: const EdgeInsets.all(0),
-    labelPadding: const EdgeInsets.symmetric(horizontal: 12),
-    side: BorderSide.none,
-    brightness: Brightness.light,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(100),
-    ),
   ),
   inputDecorationTheme: _inputDecorationTheme(),
   appBarTheme: AppBarTheme(
@@ -254,82 +190,6 @@ final ThemeData appLightTheme = ThemeData(
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: AppColors.neutral200,
   ),
-  datePickerTheme: DatePickerThemeData(
-    dayStyle: TextStyle(
-      fontFamily: mainFont().fontFamily,
-      fontSize: 16,
-      fontWeight: FontWeight.w400,
-      color: AppColors.primaryText,
-    ),
-    yearForegroundColor:
-    WidgetStateColor.resolveWith((states) => AppColors.primary),
-    dayBackgroundColor: WidgetStateColor.resolveWith(
-          (states) {
-        if (states.contains(WidgetState.selected)) {
-          return AppColors.primary;
-        } else {
-          return Colors.transparent;
-        }
-      },
-    ),
-    dayForegroundColor: WidgetStateColor.resolveWith(
-          (states) {
-        if (states.contains(WidgetState.selected)) {
-          return AppColors.primaryBackground;
-        } else if (states.contains(WidgetState.disabled)) {
-          return AppColors.neutral200;
-        } else {
-          return AppColors.primaryText;
-        }
-      },
-    ),
-    todayBackgroundColor: WidgetStateColor.resolveWith(
-          (states) {
-        if (states.contains(WidgetState.selected)) {
-          return AppColors.primary;
-        } else {
-          return Colors.transparent;
-        }
-      },
-    ),
-    todayForegroundColor: WidgetStateColor.resolveWith(
-          (states) {
-        if (states.contains(WidgetState.selected)) {
-          return AppColors.primaryBackground;
-        } else {
-          return AppColors.primary;
-        }
-      },
-    ),
-    todayBorder: const BorderSide(
-      color: AppColors.primary,
-    ),
-  ),
-  timePickerTheme: TimePickerThemeData(
-    backgroundColor: AppColors.primaryBackground,
-    hourMinuteColor: AppColors.neutral25,
-    dialHandColor: AppColors.primary,
-    dialBackgroundColor: AppColors.neutral25,
-    dayPeriodTextColor: WidgetStateColor.resolveWith(
-          (states) {
-        if (states.contains(WidgetState.selected)) {
-          return Colors.white;
-        } else {
-          return AppColors.neutral500;
-        }
-      },
-    ),
-    dialTextColor: Colors.black,
-    hourMinuteTextStyle: const TextStyle(
-      fontFamily: 'DMSans',
-      fontSize: 48,
-      fontWeight: FontWeight.w800,
-      letterSpacing: 0.46,
-    ),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-  ),
   iconButtonTheme: IconButtonThemeData(
     style: ButtonStyle(
       padding: WidgetStateProperty.all(
@@ -357,7 +217,228 @@ final ThemeData appLightTheme = ThemeData(
       return 0;
     }),
   ),
+  iconTheme: const IconThemeData(
+    color: AppColors.primaryText,
+  ),
 );
+
+final ThemeData appDarkTheme = ThemeData(
+  fontFamily: mainFont().fontFamily,
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: AppColors.darkBackground, // A darker background
+  disabledColor: AppColors.neutral400, // A muted color for disabled items
+  colorScheme: const ColorScheme.dark(
+    primary: AppColors.primaryDarkText, // Adjusted for dark theme
+    onPrimary: AppColors.primaryDarkText,
+    secondary: AppColors.secondary,
+    onSecondary: AppColors.primaryDarkText,
+    tertiary: AppColors.primaryDarkText,
+    onTertiary: AppColors.secondaryDarkText,
+    onSurface: AppColors.primaryDarkText,
+    error: AppColors.errorDark, // Darker variant for errors
+  ),
+  textTheme: TextTheme(
+    displayLarge: GoogleFonts.openSans(
+      fontSize: 44,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+    ),
+    displayMedium: mainFont(
+      fontSize: 40,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+    ),
+    displaySmall: mainFont(
+      fontSize: 36,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+    ),
+    headlineLarge: mainFont(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      color: AppColors.primaryDarkText,
+    ),
+    headlineMedium: mainFont(
+      fontSize: 24,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+    ),
+    headlineSmall: mainFont(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: AppColors.primaryDarkText,
+    ),
+    titleLarge: mainFont(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: AppColors.primaryDarkText,
+    ),
+    titleMedium: mainFont(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: AppColors.primaryDarkText,
+    ),
+    titleSmall: mainFont(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+    ),
+    labelLarge: mainFont(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+    ),
+    labelMedium: mainFont(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+      letterSpacing: 0.46,
+    ),
+    labelSmall: mainFont(
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryDarkText,
+    ),
+    bodyLarge: mainFont(
+      fontSize: 18,
+      fontWeight: FontWeight.normal,
+      color: AppColors.primaryDarkText,
+    ),
+    bodyMedium: mainFont(
+      fontSize: 16,
+      fontWeight: FontWeight.normal,
+      color: AppColors.primaryDarkText,
+    ),
+    bodySmall: mainFont(
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+      color: AppColors.primaryDarkText,
+    ),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      overlayColor: WidgetStateProperty.resolveWith(
+            (states) {
+          return states.contains(WidgetState.pressed)
+              ? AppColors.primaryDark.withOpacity(0.5)
+              : null;
+        },
+      ),
+      backgroundColor: WidgetStateProperty.all(AppColors.primaryDark),
+      foregroundColor: WidgetStateProperty.all(AppColors.darkBackground),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      padding: WidgetStateProperty.all(const EdgeInsets.all(0)),
+      minimumSize: WidgetStateProperty.all(const Size.fromHeight(50)),
+      iconSize: WidgetStateProperty.all(36),
+      iconColor: WidgetStateProperty.all(AppColors.primaryDarkText),
+      textStyle: WidgetStateProperty.all(
+        mainFont(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ),
+  ),
+  checkboxTheme: CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return AppColors.neutral600;
+      } else if (states.contains(WidgetState.selected)) {
+        return AppColors.primaryDark;
+      } else {
+        return AppColors.darkBackground;
+      }
+    }),
+    checkColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return AppColors.neutral200;
+      } else {
+        return AppColors.darkBackground;
+      }
+    }),
+  ),
+  inputDecorationTheme: _inputDecorationTheme(),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    foregroundColor: AppColors.darkBackground, // Adjusted for dark theme
+    titleTextStyle: mainFont(
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      color: AppColors.darkBackground,
+    ),
+  ),
+  textButtonTheme: TextButtonThemeData(
+    style: TextButton.styleFrom(
+      textStyle: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: AppColors.primaryDark,
+      ),
+      foregroundColor: AppColors.primaryDark,
+    ),
+  ),
+  filledButtonTheme: FilledButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return AppColors.neutral600;
+        } else {
+          return AppColors.primaryDark;
+        }
+      }),
+      foregroundColor: WidgetStateProperty.all(AppColors.darkBackground),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      padding: WidgetStateProperty.all(const EdgeInsets.all(0)),
+      minimumSize: WidgetStateProperty.all(const Size.fromHeight(50)),
+      textStyle: WidgetStateProperty.all(
+        mainFont(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ),
+  ),
+  textSelectionTheme: const TextSelectionThemeData(
+    cursorColor: AppColors.primaryDark,
+  ),
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+      padding: WidgetStateProperty.all(
+        EdgeInsets.zero,
+      ),
+      visualDensity: VisualDensity.compact,
+    ),
+  ),
+  switchTheme: SwitchThemeData(
+    thumbColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return Colors.grey;
+      } else {
+        return Colors.white;
+      }
+    }),
+    trackColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return AppColors.primaryDark;
+      } else {
+        return AppColors.neutral600;
+      }
+    }),
+    trackOutlineWidth: WidgetStateProperty.resolveWith((states) {
+      return 0;
+    }),
+  ),
+  iconTheme: const IconThemeData(
+    color: AppColors.primaryDarkText,
+  ),
+);
+
+
 
 InputDecorationTheme _inputDecorationTheme() {
   final textStyle = mainFont(

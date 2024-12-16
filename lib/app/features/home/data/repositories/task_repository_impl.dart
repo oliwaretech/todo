@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/app/common/helpers/constans.dart';
 import 'package:todo/app/features/home/domain/entities/task.dart';
@@ -19,12 +21,12 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<List<Task>> getTaskFromApi() async {
     try {
-      Uri url = Uri.parse('$baseUrl/todo');
+      Uri url = Uri.parse('$baseUrl/todos');
       final response = await http.get(url);
+      final tasks = jsonDecode(response.body);
+      return tasks.map<Task>((task) => Task.fromJson(task)).toList();
     } catch (e) {
       rethrow;
     }
-    return [];
   }
-
 }

@@ -7,5 +7,12 @@
   "confirm_password": "Confirm Password",
   "new_in_the_app": "New in the app?",
   "default_error": "Something went wrong. Please try again.",
-  "name": "Name"
+  "name": "Name",
+  "add_new_task": "Add New Task",
+  "task_name": "Task Name",
+  "task_description": "Task Description",
+  "my_tasks" : "My Tasks",
+  "home_subtitle" : "Drag to the left to delete a task",
+  "update_task" : "Update Task",
+  "search_task" : "Search Task"
 }
