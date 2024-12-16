@@ -25,7 +25,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-
   Box<Task> taskBox = Hive.box<Task>('tasks');
   List<Task> filteredTaskList = [], tasksList = [];
   final searchTaskController = TextEditingController();
@@ -39,74 +38,135 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.initState();
     getTaskFromApi();
   }
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = ref.watch(themeNotifierProvider) == ThemeMode.dark;
     final searchQuery = ref.watch(searchQueryProvider);
     final statusFilter = ref.watch(statusFilterProvider);
     final platform = Theme.of(context).platform;
+    final themeNotifier = ref.read(themeNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
         leading: platform == TargetPlatform.android
             ? IconButton(
-          icon: Icon(Icons.arrow_back, color: isDarkMode == true ? AppColors.primaryDarkText : AppColors.primary,),
-          onPressed: () {
-            context.goNamed(LoginScreen.name);
-          },
-        )
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: isDarkMode == true
+                      ? AppColors.primaryDarkText
+                      : AppColors.primary,
+                ),
+                onPressed: () {
+                  context.goNamed(LoginScreen.name);
+                },
+              )
             : GestureDetector(
-          onTap: () {
-            context.goNamed(LoginScreen.name);
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Icon(
-              CupertinoIcons.back,
-              size: 28,
-              color: isDarkMode == true ? AppColors.primaryDarkText : AppColors.primary,
-            ),
-          ),
-        ),
+                onTap: () {
+                  context.goNamed(LoginScreen.name);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Icon(
+                    CupertinoIcons.back,
+                    size: 28,
+                    color: isDarkMode == true
+                        ? AppColors.primaryDarkText
+                        : AppColors.primary,
+                  ),
+                ),
+              ),
         actions: [
           if (platform == TargetPlatform.android)
             PopupMenuButton<String>(
               onSelected: (value) {
                 _handleMenuSelection(context, value);
               },
-              icon: Icon(Icons.more_vert, color: isDarkMode == true ? AppColors.primaryDarkText : AppColors.primary),
+              icon: Icon(Icons.more_vert,
+                  color: isDarkMode == true
+                      ? AppColors.primaryDarkText
+                      : AppColors.primary),
               itemBuilder: (BuildContext context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'option1',
-                  child: Text('Option 1'),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Text(
+                        'Dark Theme',
+                        style: context.textTheme.titleMedium,
+                        textAlign: TextAlign.start,
+                      )),
+                      CustomToggleButton(
+                          platform: platform,
+                          darkMode: isDarkMode,
+                          onChanged: (val) {
+                            themeNotifier.toggleTheme();
+                            Navigator.pop(context);
+                          }),
+                    ],
+                  ),
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'option2',
-                  child: Text('Option 2'),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        _handleMenuSelection(context, 'Profile Information');
+                      },
+                      child: Text(
+                        'Profile Information',
+                        style: context.textTheme.titleMedium,
+                        textAlign: TextAlign.start,
+                      )),
                 ),
+                PopupMenuItem(
+                  value: 'option3',
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      ref.read(secureStorageProvider.notifier).deleteToken();
+                      context.goNamed(LoginScreen.name);
+                    },
+                    child: Text('Logout',
+                        style: context.textTheme.titleMedium!
+                            .copyWith(color: Colors.red)),
+                  ),
+                )
               ],
             )
           else
             IconButton(
-              icon: Icon(CupertinoIcons.ellipsis, color: isDarkMode == true ? AppColors.primaryDarkText : AppColors.primary,),
+              icon: Icon(
+                CupertinoIcons.ellipsis,
+                color: isDarkMode == true
+                    ? AppColors.primaryDarkText
+                    : AppColors.primary,
+              ),
               onPressed: () {
                 _showCupertinoDialog(context);
               },
             ),
         ],
       ),
-      body:  SafeArea(
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
               height: 10,
             ),
-            Text(AppLocalizations.of(context)!.my_tasks, style: context.textTheme.titleLarge,),
+            Text(
+              AppLocalizations.of(context)!.my_tasks,
+              style: context.textTheme.titleLarge,
+            ),
             const SizedBox(
               height: 10,
             ),
-            Text(AppLocalizations.of(context)!.home_subtitle, style: context.textTheme.bodyLarge,),
+            Text(
+              AppLocalizations.of(context)!.home_subtitle,
+              style: context.textTheme.bodyLarge,
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -148,14 +208,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 valueListenable: taskBox.listenable(),
                 builder: (context, Box<Task> box, _) {
                   taskCount = box.length;
-                  doneTaskCount = box.values.where((task) => task.status == 'done').length;
-                  pendingTaskCount = box.values.where((task) => task.status == 'pending').length;
+                  doneTaskCount =
+                      box.values.where((task) => task.status == 'done').length;
+                  pendingTaskCount = box.values
+                      .where((task) => task.status == 'pending')
+                      .length;
                   final tasks = box.values.where((task) {
                     final matchesQuery = task.title
                         .toLowerCase()
                         .contains(searchQuery.toLowerCase());
-                    final matchesStatus = statusFilter == null ||
-                        task.status == statusFilter;
+                    final matchesStatus =
+                        statusFilter == null || task.status == statusFilter;
 
                     return matchesQuery && matchesStatus;
                   }).toList();
@@ -204,11 +267,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Icon(Icons.person_2_rounded, size: 60, color: AppColors.primary,),
+              const Icon(
+                Icons.person_2_rounded,
+                size: 60,
+                color: AppColors.primary,
+              ),
               const SizedBox(
                 height: 10,
               ),
-              const Text('User Token',),
+              const Text(
+                'User Token',
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -218,22 +287,37 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               Row(
                 children: [
-                  const Icon(Icons.task, color: AppColors.primary,),
-                  const SizedBox(width: 4,),
+                  const Icon(
+                    Icons.task,
+                    color: AppColors.primary,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
                   Expanded(child: Text('Total Task: $taskCount')),
                 ],
               ),
               Row(
                 children: [
-                  const Icon(Icons.done, color: Colors.green,),
-                  const SizedBox(width: 4,),
+                  const Icon(
+                    Icons.done,
+                    color: Colors.green,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
                   Expanded(child: Text('Done Task: $doneTaskCount')),
                 ],
               ),
               Row(
                 children: [
-                  const Icon(Icons.pending_actions, color: Colors.red,),
-                  const SizedBox(width: 4,),
+                  const Icon(
+                    Icons.pending_actions,
+                    color: Colors.red,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
                   Expanded(child: Text('Pending Task: $pendingTaskCount')),
                 ],
               ),
@@ -253,29 +337,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   // Show Cupertino dialog
   void _showCupertinoDialog(BuildContext context) {
     final themeNotifier = ref.read(themeNotifierProvider.notifier);
-    final isDarkMode =
-        ref.watch(themeNotifierProvider) == ThemeMode.dark;
+    final isDarkMode = ref.watch(themeNotifierProvider) == ThemeMode.dark;
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
         title: Row(
           children: [
-            Expanded(child: Text('Dark Theme', style: context.textTheme.titleMedium, textAlign: TextAlign.start,)),
+            Expanded(
+                child: Text(
+              'Dark Theme',
+              style: context.textTheme.titleMedium,
+              textAlign: TextAlign.start,
+            )),
             CustomToggleButton(
+                platform: Theme.of(context).platform,
                 darkMode: isDarkMode,
-                onChanged: (val){
+                onChanged: (val) {
                   themeNotifier.toggleTheme();
                   Navigator.pop(context);
-            }),
+                }),
           ],
         ),
         actions: [
           CupertinoActionSheetAction(
             onPressed: () {
               Navigator.pop(context);
-              _handleMenuSelection(context, 'Profile Information',);
+              _handleMenuSelection(
+                context,
+                'Profile Information',
+              );
             },
-            child: Text('Profile Information',style: context.textTheme.titleMedium, textAlign: TextAlign.start,),
+            child: Text(
+              'Profile Information',
+              style: context.textTheme.titleMedium,
+              textAlign: TextAlign.start,
+            ),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
@@ -283,7 +379,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ref.read(secureStorageProvider.notifier).deleteToken();
               context.goNamed(LoginScreen.name);
             },
-            child: Text('Logout', style: context.textTheme.titleMedium!.copyWith(color: Colors.red) ),
+            child: Text('Logout',
+                style:
+                    context.textTheme.titleMedium!.copyWith(color: Colors.red)),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
@@ -295,20 +393,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Future getTaskFromApi() async{
+  Future getTaskFromApi() async {
     final listOfTaskFromApi = ref.read(taskRepositoryProvider);
     List<Task> listOfTask = await listOfTaskFromApi.getTaskFromApi();
-    if(taskBox.isEmpty){
+    if (taskBox.isEmpty) {
       for (var task in listOfTask) {
         await taskBox.add(task);
       }
     }
   }
 
-  Future showAddNewTaskDialog(BuildContext context) async{
+  Future showAddNewTaskDialog(BuildContext context) async {
     return showDialog(
       context: context,
-      builder: (context) => AddNewTaskDialogWidget(taskBox: taskBox,),
+      builder: (context) => AddNewTaskDialogWidget(
+        taskBox: taskBox,
+      ),
     );
   }
 }

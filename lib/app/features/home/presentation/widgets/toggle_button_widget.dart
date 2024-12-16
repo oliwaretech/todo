@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 
 class CustomToggleButton extends StatefulWidget {
   final bool darkMode;
+  final TargetPlatform platform;
   final Function onChanged;
   const CustomToggleButton({super.key,
     required this.darkMode,
-    required this.onChanged});
+    required this.onChanged,
+    required this.platform,});
 
   @override
   State<CustomToggleButton> createState() => _CustomToggleButtonState();
@@ -15,10 +17,15 @@ class CustomToggleButton extends StatefulWidget {
 class _CustomToggleButtonState extends State<CustomToggleButton> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoSwitch(
+    return widget.platform == TargetPlatform.iOS ? CupertinoSwitch(
         value: widget.darkMode,
         onChanged: (val){
           widget.onChanged(val);
-        });
+        }) : Switch(
+        value: widget.darkMode,
+        onChanged: (val){
+          widget.onChanged(val);
+        }
+    );
   }
 }
