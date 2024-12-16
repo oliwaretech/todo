@@ -1,16 +1,23 @@
-# todo
 
-todo
+# Flutter Project
 
-## Getting Started
+This is a Flutter project that demonstrates a simple app that displays a list of items and allows the user to add new items to the list (tasks).
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- Localization support via `flutter_localizations`
+- Data classes with immutability and serialization using `freezed_annotation` and `json_serializable`
+- Supports Android and iOS platforms
+- Unit and widget tests for app functionality
+- Get data from JSONPlaceholder API
+- Authenticate user with ReqRes API
+- Save data locally using `hive`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Run the project
+- Clone the repository: https://github.com/oliwaretech/todo.git
+- Run `flutter pub get` to install dependencies
+- Run 'flutter gen-l10n' to generate localization files
+- Run `flutter run` to run the app
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Run tests
+- Run `flutter test` to run all tests
